@@ -26,48 +26,107 @@
 > Git не отслеживает пустые папки. Если вы создаёте папки `handler/`, `service/` и т.д. и они пока пустые, добавьте в них файл `.gitkeep`, чтобы структура сохранилась в репозитории. Lock-файлы (`go.sum`, `package-lock.json`) и `.env.example` **нужно коммитить**.
 
 ```text
-taff-accounting/
+Sotrud/
 │
-├── backend/                    # Серверная часть (Go)
-│   ├── cmd/server/
-│   │   └── main.go             # Точка входа в приложение
-│   ├── internal/
-│   │   ├── config/             # Конфигурация приложения
-│   │   ├── handler/            # Обработка HTTP-запросов (Presentation)
-│   │   ├── service/            # Бизнес-логика (Business Logic)
-│   │   ├── repository/         # Доступ к данным (Data)
-│   │   └── model/              # Модели предметной области
-│   ├── migrations/             # SQL-миграции (если их станет больше)
-│   ├── go.mod
-│   └── go.sum                  # Lock-файл зависимостей (коммитим!)
+├── .gitignore                                
+├── .gitkeep                                   
+├── .editorconfig                              
+├── .env.example                              
+├── Makefile                                  
+├── docker-compose.yml                        
+├── LICENSE                                  
+├── readme.md                                 
+│                                               
+├── sqlite3.exe                               
+├── ИНСТРУКЦИЯ.md                             
 │
-├── frontend/                   # Клиентская часть (Vue)
-│   ├── public/
-│   ├── src/
-│   │   ├── api/                # Запросы к бэкенду (axios/fetch)
-│   │   ├── assets/             # Картинки, глобальные стили
-│   │   ├── components/         # Переиспользуемые UI компоненты
-│   │   ├── router/             # Маршрутизация Vue Router
-│   │   ├── stores/             # Состояние приложения (Pinia/Vuex)
-│   │   ├── views/              # Страницы (Вход, Таблицы, История)
-│   │   ├── App.vue
-│   │   └── main.js
-│   ├── index.html              # Главный HTML файл Vite
-│   ├── package.json
-│   ├── package-lock.json       # Lock-файл зависимостей (коммитим!)
-│   └── vite.config.js
+├── backend/
+│   ├── go.mod                                
+│   ├── go.sum                                 
+│   ├── .gitkeep                               
+│   ├── cmd/
+│   │   ├── .gitkeep                          
+│   │   ├── cl/                                
+│   │   ├── cli/
+│   │   │   └── main.go                        
+│   │   └── server/
+│   │       ├── .gitkeep                      
+│   │       └── main.go                      
+│   ├── migrations/                            
+│   └── internal/
+│       ├── .gitkeep                          
+│       ├── config/
+│       │   ├── .gitkeep                      
+│       │   └── config.go                     
+│       ├── model/
+│       │   ├── .gitkeep                     
+│       │   └── models.go                    
+│       ├── repository/
+│       │   ├── .gitkeep                       
+│       │   ├── db.go                          
+│       │   ├── errors.go                      
+│       │   ├── user_repo.go                  
+│       │   ├── employee_repo.go              
+│       │   ├── position_repo.go               
+│       │   └── appointment_repo.go            
+│       ├── service/
+│       │   ├── .gitkeep                   
+│       │   ├── errors.go                      
+│       │   ├── auth.go                        
+│       │   ├── employee.go                    
+│       │   ├── position.go                    
+│       │   ├── appointment.go                 
+│       │   └── export.go                      
+│       └── handler/
+│           ├── .gitkeep                   
+│           ├── helpers.go                    
+│           ├── middleware.go                  
+│           ├── router.go                      
+│           ├── auth.go                       
+│           ├── employee.go                 
+│           ├── position.go                
+│           ├── appointment.go
+│           └── export.go                     
 │
-├── database/                   # Файлы инициализации БД
-│   └── init.sql                # SQL-скрипт для создания таблиц
+├── database/
+│   ├── .gitkeep                           
+│   ├── init.sql                            
+│   ├── lab1.db                               
+│   ├── lab1.db-wal / lab1.db-shm             
+│   ├── ER_diagramma.JPG                      
+│   ├── Команды.txt                            
+│   └── sqlite3.exe                          
 │
-├── docs/                       # Документация и схемы
-│   ├── usecase.png             # Диаграмма вариантов использования
-│   └── architecture.png        # Схема архитектуры
+├── docs/
+│   ├── .gitkeep                              
+│   ├── Схема1.png                           
+│   ├── Схема2.png                          
+│   ├── Схема3.png                            
+│   ├── Схема4.png                            
+│   ├── Схема5.png                             
+│   ├── diagrams/
+│   │   └── usecase.puml                       
+│   └── (Схема6.png)                        
 │
-├── .editorconfig               # Единый стиль отступов и кодировки
-├── .env.example                # Пример переменных окружения (коммитим!)
-├── docker-compose.yml          # Контейнеризация (опционально)
-├── Makefile                    # Удобные команды для запуска (make run)
-├── .gitignore
-├── LICENSE
-└── README.md
+├── frontend/                                 
+│   ├── .gitkeep                             
+│   ├── package.json                      
+│   ├── package-lock.json                     
+│   ├── index.html                            
+│   ├── vite.config.js                         
+│   ├── public/.gitkeep                       
+│   └── src/
+│       ├── App.vue                          
+│       ├── main.js                          
+│       ├── api/{/.gitkeep, client.js, sotrud.js}      
+│       ├── assets/{/.gitkeep, style.css}           
+│       ├── components/{/.gitkeep, AppHeader, EmployeeForm, PositionForm,
+│       │                AppointmentForm, DataTable, SearchBar,
+│       │                ConfirmModal, ErrorBanner}.vue  
+│       ├── router/{/.gitkeep, index.js}                
+│       ├── stores/{/.gitkeep, auth.js}                  
+│       └── views/{/.gitkeep, Login, Employees, EmployeeCard,
+│                    Positions, Export}.vue               
+│
+└── out/
+    └── .gitkeep                              
