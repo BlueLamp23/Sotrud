@@ -3,10 +3,12 @@ package repository
 import (
 	"database/sql"
 	"log"
-	_ "modernc.org/sqlite" // Драйвер SQLite (чистый Go, без CGO)
+	_ "modernc.org/sqlite" // Драйвер SQLite
 )
 
-// NewDB создает подключение к базе данных и настраивает его
+// NewDB создает подключение к базе данных и настраивает его.
+// Внешние ключи (foreign_keys) включаются через DSN в config.DSN()
+// (?_pragma=foreign_keys(1)) — на всех соединениях пула сразу.
 func NewDB(dbPath string) (*sql.DB, error) {
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
@@ -18,13 +20,7 @@ func NewDB(dbPath string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	// КРИТИЧЕСКИ ВАЖНО: включаем внешние ключи для этого соединения
-	_, err = db.Exec("PRAGMA foreign_keys = ON;")
-	if err != nil {
-		return nil, err
-	}
-	
-	// Включаем режим WAL для лучшей производительности при чтении/записи
+	// включаем режим WAL для лучшей производительности при чтении/записи
 	_, err = db.Exec("PRAGMA journal_mode = WAL;")
 	if err != nil {
 		log.Println("Warning: Failed to set WAL mode:", err)
